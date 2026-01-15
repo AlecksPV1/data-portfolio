@@ -1,5 +1,6 @@
 import streamlit as st
-import PIL.Image
+import requests
+from streamlit_lottie import st_lottie
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
@@ -9,18 +10,32 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# --- ASSETS & ANIMATIONS ---
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+# Pre-load animations
+lottie_coding = "https://assets5.lottiefiles.com/packages/lf20_fcfjwiyb.json" # Data Science / Coding
+lottie_contact = "https://assets3.lottiefiles.com/packages/lf20_v7ftxo.json" # Mail/Contact
+lottie_analysis = "https://assets9.lottiefiles.com/packages/lf20_3rwasyjy.json" # Developer
+
 # --- BILINGUAL CONTENT DICTIONARY ---
 CONTENT = {
     "ES": {
         "role": "Data Analyst / Machine Learning Engineer",
         "bio_title": "Sobre Mí",
         "bio": """
-        Maestro en Electrónica de Control con una sólida base matemática y especialización en Redes Neuronales.
+        **Ingeniero Mecatrónico** transformado en **Data Scientist**.
         
-        Transicioné de la Ingeniería Mecatrónica al mundo de los Datos impulsado por mi pasión por descubrir patrones ocultos y optimizar procesos. 
-        Mi enfoque actual combina la **algoritmia avanzada** y el **modelado predictivo** para resolver problemas complejos de negocio y científicos.
+        Mi pasión reside en encontrar la señal en medio del ruido. Con una Maestría en Control y especialización en Redes Neuronales, combino la rigurosidad matemática con herramientas modernas de Data Science para resolver problemas reales.
         
-        Busco aportar valor transformando datos crudos en estrategias accionables mediante Deep Learning y Análisis Estadístico.
+        <br>
+        
+        🔹 **Enfoque:** Modelos Predictivos, Deep Learning & Automatización.
+        🔹 **Misión:** Transformar datos complejos en decisiones de negocio claras.
         """,
         "skills_title": "Habilidades Técnicas",
         "projects_title": "Portafolio de Proyectos",
@@ -39,37 +54,39 @@ CONTENT = {
         },
         "projects": [
             {
-                "title": "Solar Energy Prediction Model & Tesis",
+                "title": "Solar Energy Prediction vs. Uncertainty",
                 "tags": ["Deep Learning", "Time Series", "Python"],
-                "desc": "Este proyecto aborda la incertidumbre en la generación de energía renovable. Desarrollé técnicas de **Deep Learning** para el análisis de series temporales, logrando predecir la irradiación solar con alta precisión para optimizar la reserva de potencia en la red eléctrica. Se priorizó la limpieza de datos meteorológicos y la selección de características (Feature Engineering) para mejorar la robustez del modelo."
+                "desc": "Modelo predictivo de irradiación solar utilizando redes neuronales profundas para optimizar la reserva de potencia en redes eléctricas. El desafío principal fue la limpieza de series temporales meteorológicas ruidosas."
             },
             {
-                "title": "Cloudiness Image Recognition (CNN)",
-                "tags": ["Computer Vision", "TensorFlow/PyTorch", "CNN"],
-                "desc": "Implementación de una **Red Neuronal Convolucional (CNN)** de arquitectura profunda para la clasificación y segmentación automatizada de nubosidad en imágenes satelitales. El proyecto demostró la capacidad de procesar datos no estructurados (imágenes) y extraer patrones visuales complejos para aplicaciones meteorológicas."
+                "title": "Cloudiness Recognition (Deep CNN)",
+                "tags": ["Computer Vision", "TensorFlow", "CNN"],
+                "desc": "Clasificador automático de nubosidad basado en imágenes satelitales. Implementé una arquitectura CNN personalizada que superó a los métodos tradicionales de umbralización en diversas condiciones de iluminación."
             },
             {
-                "title": "Cloud-Based Telemetry Data Pipeline",
-                "tags": ["IoT Data", "SQL", "Cloud Pipelines"],
-                "desc": "Diseño de un sistema escalable para la ingestión y almacenamiento de datos masivos provenientes de sensores remotos. Me enfoqué en la arquitectura de datos, diseñando consultas **SQL** eficientes y pipelines de carga en la nube para asegurar la integridad y disponibilidad de los datos para su posterior análisis."
+                "title": "Scalable Telemetry Pipeline",
+                "tags": ["IoT Data", "SQL", "Cloud"],
+                "desc": "Sistema ETL para datos de sensores remotos. Diseñé el esquema de base de datos SQL y las rutinas de carga en la nube, permitiendo monitorización en tiempo real y análisis histórico sin latencia."
             }
         ],
         "contact_info": {
-            "location": "Ubicación: Cuernavaca, México",
-            "email": "Email: alejandropav27@gmail.com",
-            "cta": "¿Tienes un proyecto de datos o una vacante? ¡Hablemos!"
+            "location": "Cuernavaca, México",
+            "email": "alejandropav27@gmail.com",
+            "cta": "¿Listo para potenciar tus datos? ¡Conectemos!"
         }
     },
     "EN": {
         "role": "Data Analyst / Machine Learning Engineer",
         "bio_title": "About Me",
         "bio": """
-        MSc in Control Electronics with a strong mathematical foundation and specialization in Neural Networks.
+        **Mechatronics Engineer** turned **Data Scientist**.
         
-        I transitioned from Mechatronics Engineering to Data Science driven by my passion for uncovering hidden patterns and optimizing processes.
-        My current focus combines **advanced algorithmics** and **predictive modeling** to solve complex business and scientific problems.
+        My passion lies in finding the signal amidst the noise. With an MSc in Control and specialization in Neural Networks, I combine mathematical rigor with modern Data Science tools to solve real-world problems.
         
-        I aim to deliver value by transforming raw data into actionable strategies through Deep Learning and Statistical Analysis.
+        <br>
+        
+        🔹 **Focus:** Predictive Modeling, Deep Learning & Automation.
+        🔹 **Mission:** Transform complex data into clear business decisions.
         """,
         "skills_title": "Technical Skills",
         "projects_title": "Project Portfolio",
@@ -88,25 +105,25 @@ CONTENT = {
         },
         "projects": [
             {
-                "title": "Solar Energy Prediction Model & Thesis",
+                "title": "Solar Energy Prediction vs. Uncertainty",
                 "tags": ["Deep Learning", "Time Series", "Python"],
-                "desc": "Addressed uncertainty in renewable energy generation. I developed **Deep Learning** techniques for time series analysis, achieving high-precision solar irradiation prediction to optimize power reserve. Enhanced model robustness through rigorous meteorological data cleaning and Feature Engineering."
+                "desc": "Predictive model for solar irradiation using deep neural networks to optimize power reserve in electrical grids. Addressed the challenge of noisy meteorological time series data."
             },
             {
-                "title": "Cloudiness Image Recognition (CNN)",
-                "tags": ["Computer Vision", "TensorFlow/PyTorch", "CNN"],
-                "desc": "Implemented a deep **Convolutional Neural Network (CNN)** for automated classification and segmentation of cloudiness in satellite images. Demonstrated the capability to process unstructured data (images) and extract complex visual patterns for meteorological applications."
+                "title": "Cloudiness Recognition (Deep CNN)",
+                "tags": ["Computer Vision", "TensorFlow", "CNN"],
+                "desc": "Automated cloudiness classifier based on satellite images. Implemented a custom CNN architecture that outperformed traditional thresholding methods under various lighting conditions."
             },
             {
-                "title": "Cloud-Based Telemetry Data Pipeline",
-                "tags": ["IoT Data", "SQL", "Cloud Pipelines"],
-                "desc": "Designed a scalable system for ingesting and storing massive data from remote sensors. Focused on data architecture, designing efficient **SQL** queries and cloud loading pipelines to ensure data integrity and availability for downstream analysis."
+                "title": "Scalable Telemetry Pipeline",
+                "tags": ["IoT Data", "SQL", "Cloud"],
+                "desc": "ETL system for remote sensor data. Designed the SQL database schema and cloud loading routines, enabling real-time monitoring and historical analysis with zero latency."
             }
         ],
         "contact_info": {
-            "location": "Location: Cuernavaca, Mexico",
-            "email": "Email: alejandropav27@gmail.com",
-            "cta": "Have a data project or opening? Let's talk!"
+            "location": "Cuernavaca, Mexico",
+            "email": "alejandropav27@gmail.com",
+            "cta": "Ready to leverage your data? Let's connect!"
         }
     }
 }
@@ -115,60 +132,61 @@ CONTENT = {
 def local_css():
     st.markdown("""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
         
         html, body, [class*="css"] {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
         
-        /* Minimalist Dark Theme Adjustments */
+        /* Modern Dark & Gradient Theme */
         .stApp {
-            background-color: #0E1117;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #FAFAFA;
         }
         
-        /* Headers */
+        /* Typography */
         h1, h2, h3 {
-            color: #E0E0E0;
-            font-weight: 600;
+            font-weight: 700;
         }
-        
         h1 {
-            font-size: 3rem;
-            background: -webkit-linear-gradient(45deg, #007CF0, #00DFD8);
+            background: -webkit-linear-gradient(45deg, #3b82f6, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* Card-like styling for projects */
+        
+        /* Cards */
         .project-card {
-            background-color: #161B22;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #30363D;
+            background-color: rgba(30, 41, 59, 0.7);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
             margin-bottom: 20px;
-            transition: transform 0.2s;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .project-card:hover {
-            transform: scale(1.01);
-            border-color: #007CF0;
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
         }
         
-        /* Sidebar adjustments */
-        section[data-testid="stSidebar"] {
-            background-color: #161B22;
-        }
-        
-        /* Skills badges */
+        /* Skills Badges */
         .skill-badge {
             display: inline-block;
-            padding: 5px 10px;
-            margin: 3px;
-            background-color: #21262D;
-            border-radius: 15px;
-            font-size: 0.9em;
-            color: #58A6FF;
-            border: 1px solid #30363D;
+            padding: 6px 12px;
+            margin: 4px;
+            background: linear-gradient(90deg, #1e293b, #334155);
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: #60a5fa;
+            border: 1px solid #475569;
+            transition: 0.2s;
+        }
+        .skill-badge:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -177,103 +195,108 @@ def local_css():
 def main():
     local_css()
 
-    # --- SIDEBAR ---
+    # Sidebar
     with st.sidebar:
-        # Placeholder for profile image, looking professional
-        # st.image("path/to/profile.png", width=150) # Uncomment if image provided
-        st.markdown(f"## Alejandro Peña Vargas")
-        
-        # Language Selector
+        st.header("Alejandro Peña")
+        # Language Switcher
+        st.divider()
         lang_choice = st.radio("Language / Idioma", options=["Español", "English"], horizontal=True)
         lang = "ES" if lang_choice == "Español" else "EN"
-        
         data = CONTENT[lang]
         
+        st.divider()
+        st.write(f"📍 {data['contact_info']['location']}")
+        st.write(f"📧 {data['contact_info']['email']}")
+    
+    # Hero Section
+    col_hero_text, col_hero_img = st.columns([1.5, 1])
+    with col_hero_text:
+        st.title("Alejandro Peña Vargas")
+        st.subheader(data['role'])
         st.markdown("---")
+        st.markdown(data['bio'], unsafe_allow_html=True)
         
-        # Navigation
-        st.write(f"**{data['nav']['contact']}**")
-        st.info("alejandropav27@gmail.com")
-        st.caption(data['contact_info']['location'])
-        
-        st.markdown("---")
-        # Could add a CV download button here if file exists
-        # with open("cv.pdf", "rb") as file:
-        #     st.download_button(label=data['download_cv'], data=file, file_name="Alejandro_Pena_CV.pdf")
-
-    # --- HERO SECTION ---
-    st.title("Alejandro Peña Vargas")
-    st.markdown(f"### {data['role']}")
-    st.markdown("---")
-
-    # --- ABOUT ME ---
-    st.header(data['bio_title'])
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        st.markdown(data['bio'])
-    with col2:
-        # Highlighting Key Competencies visually
-        st.metric(label="Degree", value="MSc Control Electronics")
-        st.metric(label="Focus", value="Data & ML")
+    with col_hero_img:
+        # Lottie Animation
+        lottie_json = load_lottieurl(lottie_coding)
+        if lottie_json:
+            st_lottie(lottie_json, height=300, key="coding")
+        else:
+            st.image("https://source.unsplash.com/random/400x400?data,tech", use_column_width=True)
 
     st.markdown("---")
 
-    # --- SKILLS ---
+    # Skills Section
     st.header(data['skills_title'])
     
     sk_c1, sk_c2, sk_c3 = st.columns(3)
-    
     with sk_c1:
-        st.subheader(data['skills_cats']['lang'])
+        st.markdown(f"**{data['skills_cats']['lang']}**")
         st.markdown("""
-        - <span class="skill-badge">Python (Numpy, Pandas, Scikit-learn)</span>
-        - <span class="skill-badge">SQL</span>
-        - <span class="skill-badge">MATLAB</span>
+        <div style="margin-top:10px;">
+            <span class="skill-badge">Python</span>
+            <span class="skill-badge">SQL</span>
+            <span class="skill-badge">MATLAB</span>
+        </div>
         """, unsafe_allow_html=True)
-        
+
     with sk_c2:
-        st.subheader(data['skills_cats']['ds'])
+        st.markdown(f"**{data['skills_cats']['ds']}**")
         st.markdown("""
-        - <span class="skill-badge">Machine Learning</span>
-        - <span class="skill-badge">Deep Learning</span>
-        - <span class="skill-badge">Computer Vision</span>
-        - <span class="skill-badge">Data Visualization</span>
+        <div style="margin-top:10px;">
+            <span class="skill-badge">Machine Learning</span>
+            <span class="skill-badge">Deep Learning</span>
+            <span class="skill-badge">Computer Vision</span>
+            <span class="skill-badge">NLP</span>
+        </div>
         """, unsafe_allow_html=True)
-        
+
     with sk_c3:
-        st.subheader(data['skills_cats']['tools'])
+        st.markdown(f"**{data['skills_cats']['tools']}**")
         st.markdown("""
-        - <span class="skill-badge">Git & GitHub</span>
-        - <span class="skill-badge">Cloud Services</span>
-        - <span class="skill-badge">LaTeX</span>
+        <div style="margin-top:10px;">
+            <span class="skill-badge">Git</span>
+            <span class="skill-badge">AWS/GCP</span>
+            <span class="skill-badge">Docker</span>
+            <span class="skill-badge">Streamlit</span>
+        </div>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
 
-    # --- PROJECTS ---
+    # Projects Section
     st.header(data['projects_title'])
     
-    for project in data['projects']:
-        # Creating a visually distinct container for each project
+    # Using columns for grid layout
+    for i, project in enumerate(data['projects']):
+        # If we have multiple projects, maybe 2 per row? For now, stacked cards look good.
         st.markdown(f"""
         <div class="project-card">
             <h3>{project['title']}</h3>
-            <p><i>Stack: {', '.join(project['tags'])}</i></p>
+            <p style="color:#94a3b8; font-size:0.9em;">{' • '.join(project['tags'])}</p>
             <p>{project['desc']}</p>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("---")
 
-    # --- CONTACT ---
+    # Contact Section
     st.header(data['contact_title'])
-    st.markdown(f"#### {data['contact_info']['cta']}")
     
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown(f"📧 **Email:** alejandropav27@gmail.com")
-    with c2:
-        st.markdown(f"📍 **{data['contact_info']['location']}**")
+    c_col1, c_col2 = st.columns([1, 1])
+    with c_col1:
+        st.markdown(f"### {data['contact_info']['cta']}")
+        st.markdown(f"""
+        <div style="background:#1e293b; padding:20px; border-radius:10px; border:1px solid #334155;">
+            <p style="font-size:1.2em;">📧 <b>{data['contact_info']['email']}</b></p>
+            <p>📍 {data['contact_info']['location']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with c_col2:
+        lottie_mail = load_lottieurl(lottie_contact)
+        if lottie_mail:
+            st_lottie(lottie_mail, height=200, key="contact")
 
 if __name__ == "__main__":
     main()
