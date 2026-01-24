@@ -254,7 +254,6 @@ def main():
         st.markdown(data['bio'], unsafe_allow_html=True)
         
     with col_hero_img:
-    with col_hero_img:
         # CSS Animation
         st.markdown('<div class="hero-animation"></div>', unsafe_allow_html=True)
 
@@ -331,7 +330,7 @@ def main():
         """, unsafe_allow_html=True)
     
     with c_col2:
-    with c_col2:
+
         # Simple CSS geometric shape for contact
         st.markdown("""
         <div style="
