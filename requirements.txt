@@ -4,5 +4,4 @@ pandas
 scikit-learn
 matplotlib
 plotly
-streamlit-lottie
-requests
+
