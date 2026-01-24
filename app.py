@@ -60,7 +60,7 @@ CONTENT = {
                 "title": "Cloudiness Recognition (Deep CNN)",
                 "tags": ["Computer Vision", "TensorFlow", "CNN"],
                 "desc": "Clasificador automático de nubosidad basado en imágenes satelitales. Implementé una arquitectura CNN personalizada que superó a los métodos tradicionales de umbralización en diversas condiciones de iluminación.",
-                "link": None
+                "link": "https://jcyta.cenidet.tecnm.mx/revistas/jcyta/10-Vol_6_Num_1_Enero-Junio_2023.pdf"
             },
             {
                 "title": "Scalable Telemetry Pipeline",
@@ -120,7 +120,7 @@ CONTENT = {
                 "title": "Cloudiness Recognition (Deep CNN)",
                 "tags": ["Computer Vision", "TensorFlow", "CNN"],
                 "desc": "Automated cloudiness classifier based on satellite images. Implemented a custom CNN architecture that outperformed traditional thresholding methods under various lighting conditions.",
-                "link": None
+                "link": "https://jcyta.cenidet.tecnm.mx/revistas/jcyta/10-Vol_6_Num_1_Enero-Junio_2023.pdf"
             },
             {
                 "title": "Scalable Telemetry Pipeline",
