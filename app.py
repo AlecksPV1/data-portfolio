@@ -45,6 +45,12 @@ CONTENT = {
         },
         "projects": [
             {
+                "title": "Sistema de Predicción de Ventas Retail",
+                "tags": ["Streamlit", "Pandas", "Scikit-Learn"],
+                "desc": "Dashboard interactivo para optimizar stock prediciendo demanda futura con Random Forest.",
+                "link": "https://pandaspractica-ale.streamlit.app/"
+            },
+            {
                 "title": "Sistema de Fidelidad / Customer Loyalty System",
                 "tags": ["Django", "Python", "QR Codes"],
                 "desc": "Aplicación web completa con generación de QR, registro de visitas y dashboard administrativo. Diseño premium y adaptable para negocios.",
@@ -104,6 +110,12 @@ CONTENT = {
             "tools": "Tools & Cloud"
         },
         "projects": [
+            {
+                "title": "Retail Sales Prediction System",
+                "tags": ["Streamlit", "Pandas", "Scikit-Learn"],
+                "desc": "Interactive dashboard for stock optimization, predicting future demand using Random Forest.",
+                "link": "https://pandaspractica-ale.streamlit.app/"
+            },
             {
                 "title": "Loyalty System / Sistema de Fidelidad",
                 "tags": ["Django", "Python", "QR Codes"],
